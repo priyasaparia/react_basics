@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* background-color: lightblue;
+   */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("./image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+h1 {
+  color: red;
+  font-size: 10px;
+  padding: 34px;
+  background-color: yellow;
+  font-size: 50px;
+  border: 12px solid pink;
+  margin: 16px;
+}
+/* 
+Css box model
+
+1.height & width
+2.border
+3.padding
+4.margin
+*/

@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-image: url("./images/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "sans-serif", sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  color: #fff;
+}
+
+header h1 {
+  font-size: 22px;
+  font-weight: 500;
+  color: #00ff51;
+  font-family: "silkscreen", monospace;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+}
+ul {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+}
+ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 500;
+}
+ul li a:hover {
+  color: #dd1339;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 2px;
+}
+
+header button {
+  padding: 12px 24px;
+  background-color: #dd1339;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+header button:hover {
+  background-color: #fff;
+  color: #dd1339;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: #fff;
+  text-align: center;
+}
+main h1 {
+  font-size: 60px;
+}
+main p {
+  font-size: 20px;
+  padding: 12px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  padding: 14px;
+  color: #fff;
+}
