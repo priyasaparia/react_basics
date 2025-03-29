@@ -1,52 +1,52 @@
-import { useState, useEffect } from 'react'
-
-import './App.css'
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-}
+import { useEffect, useState } from "react";
+import "./App.css";
+import { useParams } from "react-router-dom";
 
 function App() {
-  const [product, setProduct] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
-
-  const fetData = async () => {
-    setLoading(true)
-    const response = await fetch("https://fakestoreapi.com/products")
-    const data = await response.json()
-    console.log("data", data)
-    setProduct(data)
-    setLoading(false)
-  }
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const fetchData = async () => {
+    setLoading(true);
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
+    const result = await response.json();
+    setData(result.products);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    fetData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
+    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Product List</h1>
       {loading ? (
-        <div>Loading...</div>
+        <h1 className="text-2xl text-gray-600">Loading...</h1>
       ) : (
-        <div>
-          {product.map((item, i) => (
-            <div key={i} style={{ display: "flex", gap: "10px" }}>
-              <img height={100} width={100} src={item.image} alt={item.title} />
-              <h2>{item.title}</h2>
-              <p>{item.description}</p>
-              <p>{item.price}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+          {data.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white p-4 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                className="w-full h-48 object-cover rounded-lg"
+                src={product.images[0]}
+                alt={product.title}
+              />
+              <h2 className="text-xl font-semibold mt-4 text-gray-700">{product.title}</h2>
+              <p className="text-gray-600 mt-2">{product.description}</p>
+              <p className="text-lg font-bold text-blue-600 mt-2">Price: ${product.price}</p>
+              <a
+                href={`/user/${product.id}`}
+                className="text-white text-xl ">Buy</a>
             </div>
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
