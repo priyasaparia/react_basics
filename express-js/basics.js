@@ -1,24 +1,24 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const mongodb = require("mongodb");
-
+const mongoose = require("mongoose");
+const MoviesModel = require("./models/movies");
+const CommentsModel = require("./models/comments");
 const port = process.env.PORT || 3000;
 
 const app = express();
 dotenv.config();
 
-const dbClient = new mongodb.MongoClient(process.env.MONGO_URL, {});
 function startApp() {
   return Promise.resolve()
     .then(() => {
       //establish the db connection
 
-      dbClient
-        .connect()
+      mongoose
+        .connect(process.env.MONGO_URL, {})
         .then((connection) => {
           console.log(
             "Connected to MongoDB , DatabaseName :",
-            connection.db.name
+            connection.connection.db.databaseName
           );
         })
         .catch((error) => {
@@ -39,8 +39,7 @@ function startApp() {
 
       //get movies
       app.get("/movies", (req, res) => {
-        dbClient
-          .db("sample_mflix")
+        mongoose.connection
           .collection("movies")
           .find()
           .limit(10)
@@ -56,12 +55,21 @@ function startApp() {
       //add movie
       app.post("/movies", (req, res) => {
         const movieObject = req.body;
-        dbClient
-          .db("sample_mflix")
-          .collection("movies")
-          .insertOne(movieObject)
-          .then((result) => {
-            res.status(200).json(result);
+        MoviesModel.create(movieObject)
+          .then((movie) => {
+            res.status(201).json(movie);
+          })
+          .catch((error) => {
+            res.status(422).json({ message: error.message });
+          });
+      });
+
+      //comments
+      app.post("/comments", (req, res) => {
+        const commentObject = req.body;
+        CommentsModel.create(commentObject)
+          .then((comment) => {
+            res.status(201).json(comment);
           })
           .catch((error) => {
             res.status(422).json({ message: error.message });
